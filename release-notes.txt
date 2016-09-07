@@ -1,4 +1,6 @@
 #Release Notes
 
-v0.0.1
-- first functional version
+v1.0.0 - Sept 7, 2016
+- stranded xyplot where reads from positive strand have positive values and reads from negative strand have negative values
+- displays both positive and negative values for a given bp (unlike traditional XYPlot)
+- requires specialized storage (for two separate bigwig files)
