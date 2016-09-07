@@ -98,13 +98,26 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
         var thisB = this;
         var finished = 0;
         //console.log(this._globalStats);
-        var stats = { scoreMin: 100000000, scoreMax: -10000000 };
+        // stats include: basesCovered, scoreMin, scoreMax, scoreSum, scoreSumSquared
+        // then include scoreMean and scoreStdDev
+        var stats = { scoreMax: -Infinity,
+                     scoreMin: Infinity,
+                     scoreSum: 0,
+                     scoreSumSquares: 0,
+                     basesCovered: 0
+                    };
 
         var finishCallback = function(t) {
-            //console.log(t);
+            // update stats
             if(t.scoreMin < stats.scoreMin) stats.scoreMin = t.scoreMin;
             if(t.scoreMax > stats.scoreMax) stats.scoreMax = t.scoreMax;
+            stats.scoreSum += t.scoreSum || 0;
+            stats.scoreSumSquares += t.scoreSumSquares || 0;
+            stats.basesCovered += t.basesCovered || 0;
             if(thisB.stores.length == ++finished) {
+                // compute mean and stdDev
+                stats.scoreMean = stats.basesCovered ? stats.scoreSum / stats.basesCovered : 0;
+                stats.scoreStdDev = thisB._calcStdFromSums( stats.scoreSum, stats.scoreSumSquares, stats.basesCovered );
                 successCallback( stats );
             }
         };
