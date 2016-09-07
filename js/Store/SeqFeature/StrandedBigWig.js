@@ -54,7 +54,6 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
         var zoomLevels = array.map(this.stores, function(store){
             //console.log(store);
         });
-        console.log(this.stores);
     },
 
     _checkZoomLevels: function(){
