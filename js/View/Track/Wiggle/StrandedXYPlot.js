@@ -134,7 +134,7 @@ var StrandedXYPlot = declare( [XYPlot],
                         thisB._fillRectMod( context, fRect.l, 0, fRect.w, 3);
                     }
                 }
-                else if(config.showMinus){ // downward - minus
+                else if(fRect.t > originY && config.showMinus){ // downward - minus
                     context.fillStyle = config.style.neg_color;
                     //context.fillRect( fRect.l, originY, fRect.w, fRect.t-originY+1 );
                     thisB._fillRectMod( context, fRect.l, originY, fRect.w, fRect.t-originY+1);
@@ -257,6 +257,45 @@ var StrandedXYPlot = declare( [XYPlot],
         else {
             return false;
         }
+    },
+
+    _trackMenuOptions: function() {
+        var options = this.inherited(arguments);
+        var track = this;
+        //console.log(track);
+        options.push.apply(
+            options,
+            [
+                { type: 'dijit/MenuSeparator' },
+                {
+                    label: 'Show variance band',
+                    type: 'dijit/CheckedMenuItem',
+                    checked: track.config.variance_band,
+                    onClick: function(event) {
+                        track.config.variance_band = this.checked;
+                        track.changed();
+                    }
+                },
+                {
+                    label: 'Show plus strand coverage',
+                    type: 'dijit/CheckedMenuItem',
+                    checked: track.config.showPlus,
+                    onClick: function(event) {
+                        track.config.showPlus = this.checked;
+                        track.changed();
+                    }
+                },
+                {
+                    label: 'Show minus strand coverage',
+                    type: 'dijit/CheckedMenuItem',
+                    checked: track.config.showMinus,
+                    onClick: function(event) {
+                        track.config.showMinus = this.checked;
+                        track.changed();
+                    }
+                }
+            ]);
+        return options;
     }
 
     /* If it's a boolean track, mask accordingly */
