@@ -38,7 +38,8 @@ When using this store class, the `urlTemplate` should not include the `.plus` an
 ###StrandedXYPlot
 Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks with `StrandedBigWig` storage.
 
-**Note**: `StrandedXYPlot` *can* be used with `BigWig` storage (similar to normal `XYPlot`). `XYPlot` *cannot* be used with `StrandedBigWig` storage (Negative values will not be displayed).
+**Note**: `StrandedXYPlot` *can* be used with `BigWig` storage (similar to normal `XYPlot`).  
+`XYPlot` *cannot* be used with `StrandedBigWig` storage (Negative values will not be displayed).
 
 ###Example
     {  
@@ -48,6 +49,7 @@ Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks
         "urlTemplate" : "path/to/bigwig_file.bw",
         "type" : "StrandedPlugin/View/Track/Wiggle/StrandedXYPlot"
     }
+The files `path/to/bigwig_file.bw.plus` and `path/to/bigwig_file.bw.minus` must exist.
 
 ##Future Plans
 - Have this plugin work more directly with "Alignments2" histograms so RNA-seq can have stranded coverage tracks with the read alignments
