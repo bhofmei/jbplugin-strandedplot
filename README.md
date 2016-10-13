@@ -14,13 +14,18 @@ This plugin was designed to overcome the limitations of traditional coverage tra
 For JBrowse 1.11.6+ in the _JBrowse/plugins_ folder, type:  
 ``git clone https://github.com/bhofmei/jbplugin-strandedplot.git StrandedPlotPlugin``
 
+**or**
+
+downloaded the latest release version at [releases](https://github.com/bhofmei/jbplugin-strandedplot/releases).  
+Unzip the downloaded folder, place in _JBrowse/plugins_, and rename the folder _StrandedPlotPlugin_
+
 ##Activate
-Add this to jbrowse.conf:
+Add this to _jbrowse.conf_ under `[GENERAL]`:
 
     [ plugins.StrandedPlotPlugin ]
     location = plugins/StrandedPlotPlugin
 
-If that doesn't work, add this to jbrowse_conf.json:
+If that doesn't work, add this to _jbrowse_conf.json_:
 
     "plugins" : {
         "StrandedPlotPlugin" : { "location" : "plugins/StrandedPlotPlugin" }
