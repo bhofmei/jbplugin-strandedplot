@@ -9,7 +9,7 @@ There are situations where having strand-specific coverage is useful, such as RN
 This plugin was designed to overcome the limitations of traditional coverage tracks by allowing for strand-specific coverage.
 
 
-##Install
+## Install
 
 For JBrowse 1.11.6+ in the _JBrowse/plugins_ folder, type:  
 ``git clone https://github.com/bhofmei/jbplugin-strandedplot.git StrandedPlotPlugin``
@@ -19,7 +19,7 @@ For JBrowse 1.11.6+ in the _JBrowse/plugins_ folder, type:
 downloaded the latest release version at [releases](https://github.com/bhofmei/jbplugin-strandedplot/releases).  
 Unzip the downloaded folder, place in _JBrowse/plugins_, and rename the folder _StrandedPlotPlugin_
 
-##Activate
+## Activate
 Add this to _jbrowse.conf_ under `[GENERAL]`:
 
     [ plugins.StrandedPlotPlugin ]
@@ -31,8 +31,10 @@ If that doesn't work, add this to _jbrowse_conf.json_:
         "StrandedPlotPlugin" : { "location" : "plugins/StrandedPlotPlugin" }
     }
 
-##Using Stranded XY Tracks
-###Data storage
+**DO NOT ADD THE PLUGIN TO BOTH!**
+
+## Using Stranded XY Tracks
+### Data storage
 There is a custom storage class, `StrandedBigWig` which must be used.
 
 Coverage information needs to be stored in two BigWig files. BigWig file names must follow the format `urlTemplate.plus` and `urlTemplate.minus` for plus-strand coverage and minus-strand coverage.
@@ -46,7 +48,7 @@ Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks
 **Note**: `StrandedXYPlot` *can* be used with `BigWig` storage (similar to normal `XYPlot`).  
 `XYPlot` *cannot* be used with `StrandedBigWig` storage (Negative values will not be displayed).
 
-###Example
+### Example
     {  
         "key" : "Strand-Specific Coverage",
         "label" : "track_stranded_coverage",
@@ -56,5 +58,5 @@ Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks
     }
 The files `path/to/bigwig_file.bw.plus` and `path/to/bigwig_file.bw.minus` must exist.
 
-##Future Plans
+## Future Plans
 - Have this plugin work more directly with "Alignments2" histograms so RNA-seq can have stranded coverage tracks with the read alignments

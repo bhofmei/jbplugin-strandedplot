@@ -1,5 +1,9 @@
 #Release Notes
 
+v1.1.0 - Aug 10, 2017
+- Added SVG type track which will be useful for screenshots
+- Note: SVG tracks cannot handle masks at the moment
+
 v1.0.0 - Sept 7, 2016
 - stranded xyplot where reads from positive strand have positive values and reads from negative strand have negative values
 - displays both positive and negative values for a given bp (unlike traditional XYPlot)
