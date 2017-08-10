@@ -35,48 +35,10 @@ var StrandedXYPlot = declare( [XYPlot],
                 },
                 showPlus: true,
                 showMinus: true,
-                autoscale: 'clipped_global'
+                autoscale: 'local'
             }
         );
     },
-
-    /*_getScaling: function( viewArgs, successCallback, errorCallback ) {
-
-        this._getScalingStats( viewArgs, dojo.hitch(this, function( stats ) {
-
-            //calculate the scaling if necessary
-            if( ! this.lastScaling || ! this.lastScaling.sameStats( stats ) || this.trackHeightChanged ) {
-
-                var scaling = new Scale( this.config, stats );
-
-                // bump minDisplayed to 0 if it is within 0.5% of it
-                if( Math.abs( scaling.min / scaling.max ) < 0.005 )
-                    scaling.min = 0;
-
-                // update our track y-scale to reflect it
-                this.makeYScale({
-                    fixBounds: true,
-                    min: scaling.min,
-                    max: scaling.max
-                });
-
-                // and finally adjust the scaling to match the ruler's scale rounding
-                scaling.min = this.ruler.scaler.bounds.lower;
-                scaling.max = this.ruler.scaler.bounds.upper;
-                scaling.range = scaling.max - scaling.min;
-
-                this.lastScaling = scaling;
-                this.trackHeightChanged=false; //reset flag
-            }
-
-            successCallback( this.lastScaling );
-        }), errorCallback );
-    },*/
-
-    /*updateStaticElements: function( coords ) {
-        this.inherited( arguments );
-        this.updateYScaleFromViewDimensions( coords );
-    },*/
 
     _draw: function(scale, leftBase, rightBase, block, canvas, features, featureRects, dataScale, pixels, spans) {
         var thisB = this;
@@ -116,13 +78,9 @@ var StrandedXYPlot = declare( [XYPlot],
             var f = pair.feature;
             var fRect = pair.featureRect;
             var score = f.get('score');
-            //console.log(f);
-            //var scoreID = this._getScoreInfo( tmpScore );
-            //var score = scoreID[0];
-            //var id = scoreID[1];
 
             fRect.t = toY( score );
-            //console.log(fRect.t+','+canvasHeight);
+
             if( fRect.t <= canvasHeight ) { // if the rectangle is visible at all
                 if (fRect.t <= originY && config.showPlus){ // bar goes upward - plus strand
                     context.fillStyle = config.style.pos_color;
@@ -297,87 +255,6 @@ var StrandedXYPlot = declare( [XYPlot],
             ]);
         return options;
     }
-
-    /* If it's a boolean track, mask accordingly */
-    /*_maskBySpans: function( scale, leftBase, rightBase, block, canvas, pixels, dataScale, spans ) {
-        var context = canvas.getContext('2d');
-        var canvasHeight = canvas.height;
-
-        for ( var index in spans ) {
-            if (spans.hasOwnProperty(index)) {
-                var w = Math.ceil(( spans[index].end   - spans[index].start ) * scale );
-                var l = Math.round(( spans[index].start - leftBase ) * scale );
-                context.clearRect( l, 0, w, canvasHeight );
-            }
-        }
-        context.globalAlpha = this.config.style.masked_transparancy || 0.2;
-        this.config.style.masked_transparancy = context.globalAlpha;
-        this._drawFeatures( scale, leftBase, rightBase, block, canvas, pixels, dataScale );
-    },*/
-
-    /**
-     * Draw anything needed after the features are drawn.
-     */
-    /*_postDraw: function( scale, leftBase, rightBase, block, canvas, features, featureRects, dataScale ) {
-        var context = canvas.getContext('2d');
-        var canvasHeight = canvas.height;
-
-        var ratio = Util.getResolution( context, this.browser.config.highResolutionMode );
-        var toY = dojo.hitch( this, function( val ) {
-           return canvasHeight * ( 1-dataScale.normalize(val) ) / ratio;
-        });
-        var thisB = this;
-
-        // draw the variance_band if requested
-        if( this.config.variance_band ) {
-            var bandPositions =
-                typeof this.config.variance_band == 'object'
-                    ? array.map( this.config.variance_band, function(v) { return parseFloat(v); } ).sort().reverse()
-                    : [ 2, 1 ];
-            this.getGlobalStats( dojo.hitch( this, function( stats ) {
-                if( ('scoreMean' in stats) && ('scoreStdDev' in stats) ) {
-                    var drawVarianceBand = function( plusminus, fill, label ) {
-                        context.fillStyle = fill;
-                        var varTop = toY( stats.scoreMean + plusminus );
-                        var varHeight = toY( stats.scoreMean - plusminus ) - varTop;
-                        varHeight = Math.max( 1, varHeight );
-                        thisB._fillRectMod( context, 0, varTop, canvas.width, varHeight );
-                        context.font = '12px sans-serif';
-                        if( plusminus > 0 ) {
-                            context.fillText( '+'+label, 2, varTop );
-                            context.fillText( '-'+label, 2, varTop+varHeight );
-                        }
-                        else {
-                            context.fillText( label, 2, varTop );
-                        }
-                    };
-
-                    var maxColor = new Color( this.config.style.variance_band_color );
-                    var minColor = new Color( this.config.style.variance_band_color );
-                    minColor.a /= bandPositions.length;
-
-                    var bandOpacityStep = 1/bandPositions.length;
-                    var minOpacity = bandOpacityStep;
-
-                    array.forEach( bandPositions, function( pos,i ) {
-                        drawVarianceBand( pos*stats.scoreStdDev,
-                                          Color.blendColors( minColor, maxColor, (i+1)/bandPositions.length).toCss(true),
-                                          pos+'σ');
-                    });
-                    drawVarianceBand( 0, 'rgba(255,255,0,0.7)', 'mean' );
-                }
-            }));
-        }
-
-        // draw the origin line if it is not disabled
-        var originColor = this.config.style.origin_color;
-        if( typeof originColor == 'string' && !{'none':1,'off':1,'no':1,'zero':1}[originColor] ) {
-            var originY = toY( dataScale.origin );
-            context.fillStyle = originColor;
-            context.fillRect( 0, originY, canvas.width, 1 );
-        }
-
-    }*/
 
 });
 
