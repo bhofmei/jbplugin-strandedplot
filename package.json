@@ -1,0 +1,22 @@
+{
+  "name": "StrandedPlotPlugin",
+  "version": "1.1.1",
+  "description": "JBrowse plugin allowing positive and negative values for XYPlots",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhofmei/jbplugin-strandedplot.git"
+  },
+  "keywords": [
+    "JBrowse"
+  ],
+  "author": "Brigitte Hofmeister",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bhofmei/jbplugin-strandedplot/issues"
+  },
+  "homepage": "https://github.com/bhofmei/jbplugin-strandedplot#readme"
+}
