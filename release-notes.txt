@@ -1,5 +1,8 @@
 #Release Notes
 
+v1.1.1 - Aug 11, 2017
+- CSS3 color support for stranded svg tracks
+
 v1.1.0 - Aug 10, 2017
 - Added SVG type track which will be useful for screenshots
 - Note: SVG tracks cannot handle masks at the moment
