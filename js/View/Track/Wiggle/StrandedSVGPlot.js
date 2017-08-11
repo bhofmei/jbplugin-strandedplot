@@ -144,17 +144,19 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           block.clipRects = [];
           // get all of the features
           array.forEach(features, function (f, i) {
-            //fFeatures.push({ feature: f, featureRect: featureRects[i] });
-            if (f.get('source') === 'minus') {
-              minusFeatures.push({
-                feature: f,
-                featureRect: featureRects[i]
-              });
-            } else if (f.get('source') === "plus") {
-              plusFeatures.push({
-                feature: f,
-                featureRect: featureRects[i]
-              });
+            // check that feature has positive width
+            if (featureRects[i].w > 0) {
+              if (f.get('source') === 'minus') {
+                minusFeatures.push({
+                  feature: f,
+                  featureRect: featureRects[i]
+                });
+              } else if (f.get('source') === "plus") {
+                plusFeatures.push({
+                  feature: f,
+                  featureRect: featureRects[i]
+                });
+              }
             }
           });
           // sort by left
@@ -175,10 +177,15 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.max(fRect.t, 0);
-              posList.push({
-                x: fRect.l,
-                y: top
-              });
+              // see if start matches the last position
+              var lastPoint = posList[posList.length - 1];
+              if (lastPoint.x !== fRect.l && lastPoint.y !== top) {
+                posList.push({
+                  x: fRect.l,
+                  y: top
+                });
+              }
+              // always add the end point
               posList.push({
                 x: fRect.l + fRect.w,
                 y: top
@@ -212,10 +219,14 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.min(fRect.t, canvasHeight);
-              minusList.push({
-                x: fRect.l,
-                y: top
-              });
+              // see if start matches the last position
+              var lastPoint = minusList[minusList.length - 1];
+              if (lastPoint.x !== fRect.l && lastPoint.y !== top) {
+                minusList.push({
+                  x: fRect.l,
+                  y: top
+                });
+              }
               minusList.push({
                 x: fRect.l + fRect.w,
                 y: top
@@ -285,7 +296,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           var pixelValues = new Array(canvasWidth);
           if (scoreType == "avgScore") {
             // make an array of the average score at each pixel on the canvas
-            dojo.forEach(features, function (f, i) {
+            array.forEach(features, function (f, i) {
               var store = f.source;
               var fRect = featureRects[i];
               var jEnd = fRect.r;
@@ -322,7 +333,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
             }
           } else {
             // make an array of the max score at each pixel on the canvas
-            dojo.forEach(features, function (f, i) {
+            array.forEach(features, function (f, i) {
               var store = f.data.source;
               var fRect = featureRects[i];
               var jEnd = fRect.r;
