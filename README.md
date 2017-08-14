@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bhofmei/jbplugin-strandedplot.svg?branch=master)](https://travis-ci.org/bhofmei/jbplugin-strandedplot)
+
 # Stranded XYPlot Plugin
 Allows positive and negative values, i.e. reads from the plus and minus strand, be displayed at the same coordinate.
 

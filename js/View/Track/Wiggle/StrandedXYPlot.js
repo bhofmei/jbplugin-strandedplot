@@ -75,6 +75,7 @@ var StrandedXYPlot = declare( [XYPlot],
             fFeatures.push({ feature: f, featureRect: featureRects[i] });
         });
         dojo.forEach( fFeatures, function(pair,i) {
+          //console.log(pair.feature.get('source'),pair.feature.get('start'));
             var f = pair.feature;
             var fRect = pair.featureRect;
             var score = f.get('score');

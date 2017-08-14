@@ -30,7 +30,7 @@ require([
     });
   });
 
-  /*describe('Initalize SVG track', function () {
+  describe('Initalize SVG track', function () {
     var track = new StrandedSVGPlot({
       browser: new Browser({
         unitTestMode: true
@@ -44,7 +44,7 @@ require([
       expect(track)
         .toBeTruthy();
     });
-  });*/
+  });
 
   describe('functioning store', function () {
     var store = new StrandedBigWig({

@@ -2,5 +2,9 @@
   "js": {
     "keep_array_indentation": false,
     "break_chained_methods": true,
+    "end_with_newline": true
+  },
+  "css": {
+    "newline-between-rules": true
   }
 }

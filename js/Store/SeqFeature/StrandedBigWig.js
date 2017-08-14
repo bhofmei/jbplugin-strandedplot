@@ -26,7 +26,7 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
      */
     constructor: function( args ) {
         var thisB = this;
-        if(args.config.ext === undefined){
+        if(args.config === undefined || args.config.ext === undefined){
             this.config.ext = ['plus','minus'];
         }else{
             this.config.ext = args.config.ext
