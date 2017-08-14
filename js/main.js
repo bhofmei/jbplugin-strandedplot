@@ -13,7 +13,7 @@ return declare( JBrowsePlugin,
 
       // do anything you need to initialize your plugin here
       console.log('StrandedPlotPlugin starting');
-      this.config.version = "1.1.1";
+      this.config.version = "1.1.2";
 
     }
 });

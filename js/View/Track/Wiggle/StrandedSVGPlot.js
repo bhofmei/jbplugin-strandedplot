@@ -179,15 +179,10 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.max(fRect.t, 0);
-              // see if start matches the last position
-              var lastPoint = posList[posList.length - 1];
-              if (lastPoint.x !== fRect.l && lastPoint.y !== top) {
-                posList.push({
-                  x: fRect.l,
-                  y: top
-                });
-              }
-              // always add the end point
+              posList.push({
+                x: fRect.l,
+                y: top
+              });
               posList.push({
                 x: fRect.l + fRect.w,
                 y: top
@@ -221,14 +216,10 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.min(fRect.t, canvasHeight);
-              // see if start matches the last position
-              var lastPoint = minusList[minusList.length - 1];
-              if (lastPoint.x !== fRect.l && lastPoint.y !== top) {
-                minusList.push({
-                  x: fRect.l,
-                  y: top
-                });
-              }
+              minusList.push({
+                x: fRect.l,
+                y: top
+              });
               minusList.push({
                 x: fRect.l + fRect.w,
                 y: top

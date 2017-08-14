@@ -1,5 +1,8 @@
 #Release Notes
 
+v1.1.2 - Aug 14, 2017
+- Fixed issue with diagonal lines on SVG polyline
+
 v1.1.1 - Aug 11, 2017
 - CSS3 color support for stranded svg tracks
 
