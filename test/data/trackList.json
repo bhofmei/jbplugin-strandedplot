@@ -1,0 +1,48 @@
+{
+   "formatVersion" : 1,
+   "names" : {
+      "type" : "Hash",
+      "url" : "names/"
+   },
+   "tracks" : [
+      {
+         "category" : "Test data",
+         "key" : "Reference sequence",
+         "type" : "SequenceTrack",
+         "chunkSize" : 20000,
+         "seqType" : "dna",
+         "storeClass" : "JBrowse/Store/Sequence/StaticChunked",
+         "label" : "DNA",
+         "urlTemplate" : "seq/{refseq_dirpath}/{refseq}-"
+      },
+      {
+         "type" : "JBrowse/View/Track/CanvasFeatures",
+         "style" : {
+            "className" : "feature"
+         },
+         "category" : "Test data",
+         "key" : "Genes",
+         "urlTemplate" : "tracks/genes/{refseq}/trackData.json",
+         "trackType" : null,
+         "label" : "genes",
+         "storeClass" : "JBrowse/Store/SeqFeature/NCList",
+         "compress" : 0
+      },
+      {
+         "category" : "Test data",
+         "key" : "E2FA",
+         "label" : "track_test",
+         "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
+         "type" : "StrandedPlotPlugin/View/Track/Wiggle/StrandedXYPlot",
+         "urlTemplate" : "test_e2fa_short.bw"
+      },
+      {
+        "category" : "Test data",
+         "key" : "E2FA - SVG",
+         "label" : "track_test_svg",
+         "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
+         "type" : "StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot",
+         "urlTemplate" : "test_e2fa_short.bw"
+      }
+   ]
+}
