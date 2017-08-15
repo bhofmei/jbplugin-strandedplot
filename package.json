@@ -4,8 +4,6 @@
   "description": "JBrowse plugin allowing positive and negative values for XYPlots",
   "main": "index.js",
   "scripts": {
-    "preinstall": "export YN=1",
-    "postinstall": "unset YN",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

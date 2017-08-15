@@ -1,6 +1,2 @@
 node_modules
-test/*
-!test/index.html
-!test/spec
-!test/run-jasmine.js
-!test/data
+npm-debug.log
