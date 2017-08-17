@@ -15,7 +15,7 @@
     "JBrowse plugin"
   ],
   "author": "Brigitte Hofmeister",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/bhofmei/jbplugin-strandedplot/issues"
   },
