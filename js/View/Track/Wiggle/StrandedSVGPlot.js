@@ -1,18 +1,18 @@
 define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
-  'dojo/_base/declare',
-  'dojo/_base/lang',
-  'dojo/_base/array',
-  'dojo/_base/Color',
-  'dojo/colors',
-  'dojo/on',
-  'dojo/dom-construct',
-  'dojox/gfx',
-  'JBrowse/View/Track/WiggleBase',
-  'JBrowse/View/Track/Wiggle/XYPlot',
-  'JBrowse/View/Track/_YScaleMixin',
-  'JBrowse/Util',
-  'JBrowse/View/Track/Wiggle/_Scale'
-],
+    'dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/_base/Color',
+    'dojo/colors',
+    'dojo/on',
+    'dojo/dom-construct',
+    'dojox/gfx',
+    'JBrowse/View/Track/WiggleBase',
+    'JBrowse/View/Track/Wiggle/XYPlot',
+    'JBrowse/View/Track/_YScaleMixin',
+    'JBrowse/Util',
+    'JBrowse/View/Track/Wiggle/_Scale'
+  ],
   function (
     declare,
     lang,
@@ -133,7 +133,10 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
         _drawFeatures: function (scale, leftBase, rightBase, block, canvas, features, featureRects, dataScale) {
           var thisB = this;
           var config = this.config;
-          var canvasHeight = canvas.getDimensions().height;
+          var canvasHeight = canvas.getDimensions()
+            .height;
+          var canvasWidth = canvas.getDimensions()
+            .width;
           var toY = dojo.hitch(this, function (val) {
             return canvasHeight * (1 - dataScale.normalize(val));
           });
@@ -167,26 +170,33 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           });
           minusFeatures.sort(sortByPos);
           plusFeatures.sort(sortByPos);
+          //console.log(plusFeatures);
           // loop through plus
           if (config.showPlus) {
-            var posList = [{
-              x: 0,
-              y: originY
-            }];
+            if (!config.noFill) {
+              var posList = [{
+                x: 0,
+                y: originY
+              }];
+            }
+            var lastY = originY;
             array.forEach(plusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.max(fRect.t, 0);
-              posList.push({
-                x: fRect.l,
-                y: top
-              });
-              posList.push({
-                x: fRect.l + fRect.w,
-                y: top
-              });
+              if (lastY != top) {
+                posList.push({
+                  x: fRect.l,
+                  y: lastY
+                });
+                posList.push({
+                  x: fRect.l,
+                  y: top
+                });
+                lastY = top;
+              }
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t < 0) {
                 block.clipRects.push({
@@ -199,31 +209,50 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               }
             }, this);
             posList.push({
-              x: canvas.getDimensions().width,
-              y: originY
+              x: canvasWidth,
+              y: lastY
             });
-            canvas.createPolyline().setShape(posList).setStroke(config.style.pos_color).setFill(config.style.pos_color);
-          }
+            if (lastY != originY && !config.noFill) {
+              posList.push({
+                x: canvasWidth,
+                y: originY
+              });
+            }
+            if (posList.length > 2) {
+              var plusLine = canvas.createPolyline()
+                .setShape(posList)
+                .setStroke(config.style.pos_color);
+              if (!config.noFill) {
+                plusLine.setFill(config.style.pos_color)
+              }
+            }
+          } // end show plus
           // loop through minus
           if (config.showMinus) {
-            var minusList = [{
-              x: 0,
-              y: originY
-            }];
+            if (!config.noFill) {
+              var minusList = [{
+                x: 0,
+                y: originY
+              }];
+            }
+            var lastY = originY;
             array.forEach(minusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.min(fRect.t, canvasHeight);
-              minusList.push({
-                x: fRect.l,
-                y: top
-              });
-              minusList.push({
-                x: fRect.l + fRect.w,
-                y: top
-              });
+              if (lastY != top) {
+                minusList.push({
+                  x: fRect.l,
+                  y: lastY
+                });
+                minusList.push({
+                  x: fRect.l,
+                  y: top
+                });
+                lastY = top;
+              }
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t > canvasHeight) {
                 block.clipRects.push({
@@ -236,17 +265,31 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               }
             }, this);
             minusList.push({
-              x: canvas.getDimensions().width,
-              y: originY
+              x: canvasWidth,
+              y: lastY
             });
-            canvas.createPolyline().setShape(minusList).setStroke(config.style.neg_color).setFill(config.style.neg_color);
-          }
+            if (lastY != originY && !config.noFill) {
+              minusList.push({
+                x: canvasWidth,
+                y: originY
+              });
+            }
+            if (minusList.length > 2) {
+              var minusLine = canvas.createPolyline()
+                .setShape(minusList)
+                .setStroke(config.style.neg_color);
+              if (!config.noFill) {
+                minusLine.setFill(config.style.neg_color)
+              }
+            }
+          } // end show minus
           // done
 
         },
         _postDraw: function (scale, leftBase, rightBase, block, canvas, features, featureRects, dataScale) {
 
-          var canvasHeight = canvas.getDimensions().height;
+          var canvasHeight = canvas.getDimensions()
+            .height;
           var toY = dojo.hitch(this, function (val) {
             return canvasHeight * (1 - dataScale.normalize(val));
           });
@@ -256,11 +299,12 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           if (!thisB.config.disable_clip_markers && block.hasOwnProperty('clipRects') && block.clipRects.length > 0) {
             array.forEach(block.clipRects, function (rect) {
               canvas.createRect({
-                x: rect.x,
-                y: rect.y,
-                height: rect.height,
-                width: rect.width
-              }).setFill(rect.fill);
+                  x: rect.x,
+                  y: rect.y,
+                  height: rect.height,
+                  width: rect.width
+                })
+                .setFill(rect.fill);
             });
             block.clipRects = [];
           }
@@ -275,11 +319,13 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
             }[originColor]) {
             var originY = toY(dataScale.origin);
             canvas.createLine({
-              x1: 0,
-              x2: canvas.getDimensions().width,
-              y1: originY,
-              y2: originY
-            }).setStroke(originColor);
+                x1: 0,
+                x2: canvas.getDimensions()
+                  .width,
+                y1: originY,
+                y2: originY
+              })
+              .setStroke(originColor);
           }
 
         },
@@ -354,9 +400,11 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               if (pixelValues[i]) {
                 var tmp = '';
                 if (pixelValues[i]['scorex']['plus'])
-                  tmp = tmp + '<div style="float:right;"> ' + pixelValues[i]['scorex']['plus'].toPrecision(6).toString() + '</div>';
+                  tmp = tmp + '<div style="float:right;"> ' + pixelValues[i]['scorex']['plus'].toPrecision(6)
+                  .toString() + '</div>';
                 if (pixelValues[i]['scorex']['minus'])
-                  tmp = tmp + '<div>' + pixelValues[i]['scorex']['minus'].toPrecision(6).toString() + '</div>';
+                  tmp = tmp + '<div>' + pixelValues[i]['scorex']['minus'].toPrecision(6)
+                  .toString() + '</div>';
                 if (tmp === '')
                   tmp = '<div style="float:right">0</div>';
                 pixelValues[i]['score'] = tmp;
@@ -440,19 +488,18 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           var track = this;
           //console.log(track);
           options.push.apply(
-            options, [
-              {
+            options, [{
                 type: 'dijit/MenuSeparator'
               },
-              /*{
+              {
                 label: 'Show variance band',
                 type: 'dijit/CheckedMenuItem',
-                checked: track.config.variance_band,
+                checked: track.config.variance_band || false,
                 onClick: function (event) {
                   track.config.variance_band = this.checked;
                   track.changed();
                 }
-                },*/
+                },
               {
                 label: 'Show plus strand coverage',
                 type: 'dijit/CheckedMenuItem',
@@ -461,7 +508,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   track.config.showPlus = this.checked;
                   track.changed();
                 }
-                },
+              },
               {
                 label: 'Show minus strand coverage',
                 type: 'dijit/CheckedMenuItem',
@@ -470,7 +517,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   track.config.showMinus = this.checked;
                   track.changed();
                 }
-                }
+              }
             ]);
           return options;
         }
