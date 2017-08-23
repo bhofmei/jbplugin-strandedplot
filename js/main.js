@@ -12,7 +12,7 @@ define([
 
         // do anything you need to initialize your plugin here
         console.log('StrandedPlotPlugin starting');
-        this.config.version = "1.1.2";
+        this.config.version = "1.1.3";
         browser.registerTrackType({
           label: 'StrandedSVGPlot',
           type: 'StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot'

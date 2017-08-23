@@ -62,3 +62,4 @@ The files `path/to/bigwig_file.bw.plus` and `path/to/bigwig_file.bw.minus` must 
 
 ## Future Plans
 - Have this plugin work more directly with "Alignments2" histograms so RNA-seq can have stranded coverage tracks with the read alignments
+- Handle "no fill" configuration option
