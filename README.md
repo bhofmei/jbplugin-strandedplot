@@ -60,6 +60,57 @@ Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks
     }
 The files `path/to/bigwig_file.bw.plus` and `path/to/bigwig_file.bw.minus` must exist.
 
+## Stranded Histogram Tracks
+Canvas feature based tracks, i.e. Alignments2 and smAlignments from [SmallRNAPlugin](https://github.com/bhofmei/jbplugin-smallrna), have a histogram view when zoomed past the max glyph density.
+For alignments2 and smAlignments, the histograms are drawn based on a stored BigWig which has the read coverage (See the [JBrowse configuration guide](http://gmod.org/wiki/JBrowse_Configuration_Guide#alginments2) under configuration options -> histograms), which is strand independent by virtue of bigwig file storage.
+
+### Example and Configuration
+This plugin includes support to have the histograms be stranded when specified.
+Note, the y-axis range cannot be changed at this time.
+
+To have stranded histograms for an Alignments2 track,
+```
+{
+  "key" : "Alignments",
+  "label" : "track_alignments_stranded_coverage",
+  ...,
+  "histograms" : {
+    "color" : "#d1d1d1",
+    "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
+    "urlTemplate" : "path/to/coverage_file.bw",
+    "description" : "coverage depth",
+    "height" : 100
+  },
+  ...,
+  "type" : "JBrowse/View/Track/Alignments2"
+}
+```
+
+The important lines are `histograms.storeClass` and `histograms.urlTemplate`.
+The files `path/to/coverage_file.bw.plus` and `path/to/coverage_file.bw.minus` must exist. See [Data storage](#data-storage).
+
+
+### Additional plugin support
+Stranded coverage plots will work for Small RNA Alignments from the [SmallRNAPlugin]().
+
+```
+{
+  "key" : "Small RNA Alignments",
+  "label" : "track_smalignments_stranded_coverage",
+  ...,
+  "histograms" : {
+    "color" : "#d1d1d1",
+    "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
+    "urlTemplate" : "path/to/smrna_coverage_file.bw",
+    "description" : "coverage depth",
+    "height" : 100
+  },
+  ...,
+  "type" : "SmallRNAPlugin/View/Track/smAlignments"
+}
+```
+
+The files `path/to/smrna_coverage_file.bw.plus` and `path/to/smrna_coverage_file.bw.minus` must exist.
+
 ## Future Plans
-- Have this plugin work more directly with "Alignments2" histograms so RNA-seq can have stranded coverage tracks with the read alignments
 - Handle "no fill" configuration option
