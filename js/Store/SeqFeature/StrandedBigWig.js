@@ -37,7 +37,6 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
         this.stores = array.map( newFiles, function( n ) {
             return new BigWig( dojo.mixin(args, {urlTemplate: n.url, name: n.name}) );
         });
-
         all( array.map( this.stores, function(store) {
             return store._deferred.features
         })).then( function() {
