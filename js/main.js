@@ -167,7 +167,7 @@ define([
               }
             }
             // draw origin
-            ctx.fillStyle = this.config.origin_color || 'black';
+            ctx.fillStyle = this.config.style.origin_color || 'black';
             ctx.fillRect(0, originY, ctx.canvas.width, 1);
           }
         } else {
