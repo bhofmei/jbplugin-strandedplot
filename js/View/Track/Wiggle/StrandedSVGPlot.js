@@ -166,11 +166,11 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
           });
           // sort by left
           var sortByPos = lang.hitch(this, function (a, b) {
-            return a.featureRect.l - b.featureRect.l;
+            return a.feature.data.start - b.feature.data.start;
           });
           minusFeatures.sort(sortByPos);
           plusFeatures.sort(sortByPos);
-          //console.log(plusFeatures);
+          //console.log('features', plusFeatures);
           // loop through plus
           if (config.showPlus) {
             if (!config.noFill) {
@@ -178,15 +178,18 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                 x: 0,
                 y: originY
               }];
+            } else {
+              posList = [];
             }
             var lastY = originY;
+            var lastX = 0;
             array.forEach(plusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.max(fRect.t, 0);
-              if (lastY != top) {
+              if (lastY !== top && lastX !== fRect.l) {
                 posList.push({
                   x: fRect.l,
                   y: lastY
@@ -196,6 +199,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   y: top
                 });
                 lastY = top;
+                lastX = fRect.l;
               }
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t < 0) {
@@ -208,6 +212,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                 });
               }
             }, this);
+            //console.log('list', posList);
             posList.push({
               x: canvasWidth,
               y: lastY
@@ -236,13 +241,14 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               }];
             }
             var lastY = originY;
+            var lastX = 0;
             array.forEach(minusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
               var score = f.get('score');
               fRect.t = toY(score);
               var top = Math.min(fRect.t, canvasHeight);
-              if (lastY != top) {
+              if (lastY !== top && lastX !== fRect.l) {
                 minusList.push({
                   x: fRect.l,
                   y: lastY
@@ -252,6 +258,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   y: top
                 });
                 lastY = top;
+                lastX = fRect.l;
               }
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t > canvasHeight) {
