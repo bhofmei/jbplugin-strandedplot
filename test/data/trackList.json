@@ -43,6 +43,20 @@
          "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
          "type" : "StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot",
          "urlTemplate" : "test_e2fa_short.bw"
+      }, {
+        "category" : "Test data",
+        "key" : "RNA-seq with stranded coverage",
+        "label" : "track_test_rnaseq",
+        "maxFeatureScreenDensity": 0.5,
+        "histograms" : {
+            "color" : "#d1d1d1",
+            "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
+            "urlTemplate" : "untreated-col-rnaseq_short.bw",
+            "description" : "coverage depth",
+        },
+        "storeClass" : "JBrowse/Store/SeqFeature/BAM",
+        "urlTemplate" : "untreated-col-rnaseq_short.bam",
+        "type" : "JBrowse/View/Track/Alignments2"
       }
    ]
 }
