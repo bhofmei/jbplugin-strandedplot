@@ -1,5 +1,7 @@
 # Change Log
 ## [Unreleased]
+- UPDATED documentation
+- UPDATED test data to include example of stranded rna-seq coverage
 
 ## [v1.2.0] - 2017-08-25
 - ADDED stranded histogram views for CanvasFeature (or anything that inherits it)
