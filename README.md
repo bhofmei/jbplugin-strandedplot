@@ -60,7 +60,7 @@ Similar to specificing the traditional `XYPlot`, use `StrandedXYPlot` for tracks
         "label" : "track_stranded_coverage",
         "storeClass" : "StrandedPlotPlugin/Store/SeqFeature/StrandedBigWig",
         "urlTemplate" : "path/to/bigwig_file.bw",
-        "type" : "StrandedPlugin/View/Track/Wiggle/StrandedXYPlot"
+        "type" : "StrandedPlotPlugin/View/Track/Wiggle/StrandedXYPlot"
     }
 The files `path/to/bigwig_file.bw.plus` and `path/to/bigwig_file.bw.minus` must exist.
 
@@ -95,7 +95,7 @@ The files `path/to/coverage_file.bw.plus` and `path/to/coverage_file.bw.minus` m
 
 
 ### Additional plugin support
-Stranded coverage plots will work for Small RNA Alignments from the [SmallRNAPlugin]().
+Stranded coverage plots will work for Small RNA Alignments from the [SmallRNAPlugin](https://github.com/bhofmei/jbplugin-smallrna).
 
 ```
 {
