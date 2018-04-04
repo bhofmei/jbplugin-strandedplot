@@ -47,8 +47,8 @@ define([
 
       _drawHistograms: function (viewArgs, histData) {
         var thisB = this;
-        var maxScore = 'max' in this.config.histograms ? this.config.histograms.max : histData.stats.max;
-        var minScore = 'min' in this.config.histograms ? this.config.histograms.min : histData.stats.min;
+        var maxScore = (this.config.histograms && this.config.histograms.max ) ? this.config.histograms.max : (histData.stats && histData.stats.max ? histData.stats.max : undefined );
+        var minScore = (this.config.histograms && this.config.histograms.min ) ? this.config.histograms.min : (histData.stats && histData.stats.min ? histData.stats.min : 0 )
 
         // don't do anything if we don't know the score max
         if (maxScore === undefined) {
