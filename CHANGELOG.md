@@ -1,5 +1,8 @@
 # Change Log
 ## [Unreleased]
+
+## [v1.2.1]
+- UPDATED to work with newer version of JBrowse
 - UPDATED documentation
 - UPDATED test data to include example of stranded rna-seq coverage
 

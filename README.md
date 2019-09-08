@@ -10,6 +10,12 @@ There are situations where having strand-specific coverage is useful, such as RN
 
 This plugin was designed to overcome the limitations of traditional coverage tracks by allowing for strand-specific coverage.
 
+### JBrowse compatibility
+- Originally designed for JBrowse v1.12.x (which uses bower install)
+- Currently continuous integration and unit tests are run again JBrowse v1.12.6
+- JBrowse v1.13 introduced a new way to install/package JBrowse
+- Starting with JBrowse v1.13, the development version must be used
+- Has been manually tested for JBrowse v1.16.1-dev
 
 ## Install
 
@@ -21,7 +27,14 @@ For JBrowse 1.11.6+ in the _JBrowse/plugins_ folder, type:
 downloaded the latest release version at [releases](https://github.com/bhofmei/jbplugin-strandedplot/releases).  
 Unzip the downloaded folder, place in _JBrowse/plugins_, and rename the folder _StrandedPlotPlugin_
 
+### JBrowse v1.13+
+You MUST use JBrowse v1.x.x-dev version.
+
+Run `setup.sh` after installing and updating the plugin.
+
 ## Activate
+
+
 Add this to _jbrowse.conf_ under `[GENERAL]`:
 
     [ plugins.StrandedPlotPlugin ]
@@ -42,7 +55,7 @@ There is a custom storage class, `StrandedBigWig` which must be used.
 Requirements:
 1. Coverage information needs to be stored in two BigWig files.
 2. BigWig file names must follow the format `urlTemplate.plus` and `urlTemplate.minus` for plus-strand coverage and minus-strand coverage.
-3. Values in `urlTemplate.minus` should be negative. 
+3. Values in `urlTemplate.minus` should be negative.
 
 When using this store class, the `urlTemplate` in the track configuration should not include the `.plus` and `.minus`. The BigWig files `urlTemplate.plus` and `urlTemplate.minus` will be loaded.
 
@@ -128,7 +141,7 @@ Mac OSX 64-bit: <http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/>
 Linux 64-bit: <http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/>  
 Older Linux/Linux server: <http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/>
 
-1. Choose the appropriate web page from above based on operating stystem. There will be a long list of programs. 
+1. Choose the appropriate web page from above based on operating stystem. There will be a long list of programs.
 2. Scroll down to find _bedGraphToBigWig_ and _bedSort_
 3. Save this program to computer
 4. In terminal, navigate to the directory with the program
@@ -176,7 +189,7 @@ For best results, add the installation directory for _samtools_ to `PATH` in _.b
 Usage:  python3 file_to_bigwig_pe.py [-q] [-h] [-keep] [-scale | -scale=chrm]
         [-strand] [-sort] [-p=num_proc] <chrm_file> <bam_file |
         bed_file> [bam_file | bed_file]*
-        
+
 Convert BED/BAM file to bigWig format for coverage view
 Note: bedtools, bedGraphToBigWig, samtools, and bedSort programs must be in the path
 

@@ -18,8 +18,8 @@ define([
         var thisB = this;
 
         // do anything you need to initialize your plugin here
-        this.config.version = "1.2.0";
-        console.log('StrandedPlotPlugin starting - v', this.config.version);
+        this.config.version = "1.2.1";
+        console.log('StrandedPlotPlugin starting - v'+this.config.version);
 
         browser.registerTrackType({
           label: 'StrandedSVGPlot',
