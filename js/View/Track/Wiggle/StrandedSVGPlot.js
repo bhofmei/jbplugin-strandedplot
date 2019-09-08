@@ -182,7 +182,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               posList = [];
             }
             var lastY = originY;
-            var lastX = 0;
+            var lastX = -1;
             array.forEach(plusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
@@ -190,6 +190,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               fRect.t = toY(score);
               var top = Math.max(fRect.t, 0);
               if (lastY !== top && lastX !== fRect.l) {
+                //console.log('last', lastX, lastY, 'current', fRect.l, top, 'score', score);
                 posList.push({
                   x: fRect.l,
                   y: lastY
@@ -198,9 +199,37 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   x: fRect.l,
                   y: top
                 });
-                lastY = top;
+                //lastY = top;
                 lastX = fRect.l;
+              } else {
+                //console.log('--last', lastX, lastY, 'current', fRect.l, top, 'score', score);
               }
+              lastY = top;
+              /*if (lastY !== top) {
+                //console.log('lastY !== currentY');
+                if (lastX !== fRect.l) {
+                  //console.log('last', lastX, lastY, 'current', fRect.l, top, 'score', score);
+                  posList.push({
+                    x: fRect.l,
+                    y: lastY
+                  });
+                  posList.push({
+                    x: fRect.l,
+                    y: top
+                  });
+                  lastX = fRect.l;
+                }
+                 else if(Math.abs(lastY-top) > 5){
+                   //console.log('-last', lastX, lastY, 'current', fRect.l, top, 'score', score);
+                  posList.push({
+                    x: fRect.l,
+                    y: top
+                  });
+                } else {
+                  //console.log('--last', lastX, lastY, 'current', fRect.l, top, 'score', score);
+                }
+                lastY = top;
+              }*/
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t < 0) {
                 block.clipRects.push({
@@ -241,7 +270,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               }];
             }
             var lastY = originY;
-            var lastX = 0;
+            var lastX = -1;
             array.forEach(minusFeatures, function (pair, i) {
               var f = pair.feature;
               var fRect = pair.featureRect;
@@ -260,6 +289,20 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                 lastY = top;
                 lastX = fRect.l;
               }
+              /*if (lastY !== top) {
+                if (lastX !== fRect.l) {
+                  minusList.push({
+                    x: fRect.l,
+                    y: lastY
+                  });
+                  minusList.push({
+                    x: fRect.l,
+                    y: top
+                  });
+                  lastX = fRect.l;
+                }
+                lastY = top;
+              }*/
               // add rect to clip markers if necessary
               if (!disableClipMarkers && fRect.t > canvasHeight) {
                 block.clipRects.push({
@@ -383,7 +426,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
               var store = f.data.source;
               var fRect = featureRects[i];
               var jEnd = fRect.r;
-              var score = f.get(scoreType) || f.get('score');
+              var score = scoreType ? f.get(scoreType) : f.get('score');
               for (var j = Math.round(fRect.l); j < jEnd; j++) {
                 // positive values
                 if (pixelValues[j] && store === 'plus') {
@@ -506,7 +549,7 @@ define('StrandedPlotPlugin/View/Track/Wiggle/StrandedSVGPlot', [
                   track.config.variance_band = this.checked;
                   track.changed();
                 }
-                },
+              },
               {
                 label: 'Show plus strand coverage',
                 type: 'dijit/CheckedMenuItem',

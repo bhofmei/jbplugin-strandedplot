@@ -152,7 +152,7 @@ var StrandedXYPlot = declare( [XYPlot],
                 var store = f.data.source;
                 var fRect = featureRects[i];
                 var jEnd = fRect.r;
-                var score = f.get(scoreType)||f.get('score');
+                var score = scoreType ? f.get(scoreType) : f.get('score');
                 for( var j = Math.round(fRect.l); j < jEnd; j++ ) {
                     // positive values
                     if ( pixelValues[j] && store === 'plus' ) {

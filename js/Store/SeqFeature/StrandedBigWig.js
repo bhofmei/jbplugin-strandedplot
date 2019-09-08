@@ -84,8 +84,15 @@ return declare([ SeqFeatureStore, DeferredFeaturesMixin, DeferredStatsMixin ],
             }
         }
         array.forEach( this.stores, function(store) {
+          var updatedFeatureCallback = (function(name){
+            return function(feat){
+              if( !feat.data.source )
+                feat.data.source = name;
+              featureCallback(feat)
+            }
+          })(store.name)
             store._getFeatures( query,
-                featureCallback, finishCallback, errorCallback
+                updatedFeatureCallback, finishCallback, errorCallback
             );
         });
     },
